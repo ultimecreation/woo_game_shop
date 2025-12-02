@@ -1,0 +1,56 @@
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql_container
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: woo-game-shop
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql_data:/var/lib/mysql
+    networks:
+      - app_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_container
+    restart: on-failure
+    environment:
+      MYSQL_USERNAME: wordpress
+      MYSQL_ROOT_PASSWORD: wordpress
+      PMA_HOST: mysql
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    networks:
+      - app_network
+
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress_container
+    restart: on-failure
+    environment:
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: woo-game-shop
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/wordpress:/var/www/html
+      - ./themes:/var/www/html/wp-content/themes
+      - ./plugins:/var/www/html/wp-content/plugins
+      - ./mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+    depends_on:
+      - mysql
+    networks:
+      - app_network
+
+networks:
+  app_network: 
