@@ -22,6 +22,35 @@ return array(
 		'style' => 'file:./style-index.css',
 		'viewScript' => 'file:./view.js'
 	),
+	'block-header' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'woo-game-shop/block-header',
+		'version' => '0.1.0',
+		'title' => 'Block Header',
+		'category' => 'woo-game-shop',
+		'icon' => 'layout',
+		'description' => 'Site header block.',
+		'example' => array(
+			
+		),
+		'supports' => array(
+			'html' => false
+		),
+		'attributes' => array(
+			'memberLink' => array(
+				'type' => 'string'
+			),
+			'cartLink' => array(
+				'type' => 'string'
+			)
+		),
+		'textdomain' => 'blocks-woo-game-shop',
+		'editorScript' => 'file:./index.js',
+		'editorStyle' => 'file:./index.css',
+		'style' => 'file:./style-index.css',
+		'viewScript' => 'file:./view.js'
+	),
 	'block-hero' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
